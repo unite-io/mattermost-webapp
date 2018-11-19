@@ -1,4 +1,12 @@
-# Mattermost
+# Steps
+
+- read https://developers.mattermost.com/contribute/webapp/developer-setup/
+- run `make build` (creates / updates `./dist` folder)
+- run `docker-compose up` (uses `./dist` folder contents to serve UI) (can stop with CTRL+C)
+- run `docker-compose down` if some processes are stuck after CTRL+C. Check with `docker ps`
+
+
+# Original README Contents
 
 Mattermost is an open source, self-hosted Slack-alternative from [https://mattermost.org](https://mattermost.org).
 
