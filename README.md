@@ -2,7 +2,7 @@
 
 - read https://developers.mattermost.com/contribute/webapp/developer-setup/
 - run `make build` (creates / updates `./dist` folder)
-- run `docker-compose up` (uses `./dist` folder contents to serve UI) (can stop with CTRL+C)
+- run `docker-compose up` (uses `./dist` folder contents to serve UI) and navigate to [localhost:8080](http://localhost:8080) (can stop with CTRL+C)
 - run `docker-compose down` if some processes are stuck after CTRL+C. Check with `docker ps`
 
 
