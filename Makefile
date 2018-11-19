@@ -63,6 +63,7 @@ clean: ## Clears cached; deletes node_modules and dist directories
 
 	rm -rf dist
 	rm -rf node_modules
+	rm -rf .volumes
 
 emojis: ## Creates emoji JSX file and extracts emoji images from the system font
 	gem install bundler
@@ -72,3 +73,18 @@ emojis: ## Creates emoji JSX file and extracts emoji images from the system font
 ## Help documentatin à la https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.volumes:
+	mkdir -p .volumes/app/mattermost/config
+	mkdir -p .volumes/app/mattermost/data
+	mkdir -p .volumes/app/mattermost/logs
+	mkdir -p .volumes/app/mattermost/plugins
+	mkdir -p .volumes/db/var/lib/postgresql/data
+
+.PHONY: start-stack stop-stack
+
+start-stack: .volumes
+	docker-compose up
+
+stop-stack:
+	docker-compose down

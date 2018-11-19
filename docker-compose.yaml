@@ -6,8 +6,8 @@ services:
     image: mattermost/mattermost-prod-db
     read_only: true
     restart: unless-stopped
-#    volumes:
-#      - ./volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
+    volumes:
+      - ./.volumes/db/var/lib/postgresql/data:/var/lib/postgresql/data
 #      - /etc/localtime:/etc/localtime:ro
     environment:
       - POSTGRES_USER=mmuser
@@ -23,11 +23,11 @@ services:
     image: mattermost/mattermost-prod-app
     restart: unless-stopped
     volumes:
-      - ./dist:/mattermost/client
-#      - ./volumes/app/mattermost/config:/mattermost/config:rw
-#      - ./volumes/app/mattermost/data:/mattermost/data:rw
-#      - ./volumes/app/mattermost/logs:/mattermost/logs:rw
-#      - ./volumes/app/mattermost/plugins:/mattermost/plugins:rw
+      - ./dist:/mattermost/client:rw
+      - ./.volumes/app/mattermost/config:/mattermost/config:rw
+      - ./.volumes/app/mattermost/data:/mattermost/data:rw
+      - ./.volumes/app/mattermost/logs:/mattermost/logs:rw
+      - ./.volumes/app/mattermost/plugins:/mattermost/plugins:rw
 #      - /etc/localtime:/etc/localtime:ro
     environment:
       # set same as db credentials and dbname
@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 #    volumes:
 #      # This directory must have cert files if you want to enable SSL
-#      - ./volumes/web/cert:/cert:ro
+#      - ./.volumes/web/cert:/cert:ro
 #      - /etc/localtime:/etc/localtime:ro
     # Uncomment for SSL
     # environment:

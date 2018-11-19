@@ -2,9 +2,12 @@
 
 - read https://developers.mattermost.com/contribute/webapp/developer-setup/
 - run `make build` (creates / updates `./dist` folder)
-- run `docker-compose up` (uses `./dist` folder contents to serve UI) and navigate to [localhost:8080](http://localhost:8080) (can stop with CTRL+C)
-- run `docker-compose down` if some processes are stuck after CTRL+C. Check with `docker ps`
+- run `make start-stack` (uses `./dist` folder contents to serve UI) and navigate to [localhost:8080](http://localhost:8080) (can stop with CTRL+C)
+- run `make stop-stack` if some processes are stuck after CTRL+C. Check with `docker ps`
 
+This set up saves the state of the server in `.volumes` folder. 
+First time you start the stack, `.volumes` folder will be auto-created.
+Inspect the folder after first run to see messaging server settings, logs, meda-data.
 
 # Original README Contents
 
