@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentChannel, getCurrentChannelStats} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannel, getChannel, getCurrentChannelStats} from 'mattermost-redux/selectors/entities/channels';
 import {getCurrentUserId, isCurrentUserSystemAdmin, getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
 import {get, getInt, getBool} from 'mattermost-redux/selectors/entities/preferences';
 import {
@@ -40,13 +40,13 @@ import CreatePost from './create_post.jsx';
 function mapStateToProps() {
     return (state, ownProps) => {
         const config = getConfig(state);
-        const currentChannel = getCurrentChannel(state) || {};
-        const draft = getPostDraft(state, StoragePrefixes.DRAFT, currentChannel.id);
-        const recentPostIdInChannel = getMostRecentPostIdInChannel(state, currentChannel.id);
+        // const currentChannel = getChannel(ownProps.channelId) || {};
+        const draft = getPostDraft(state, StoragePrefixes.DRAFT, ownProps.channelId);
+        const recentPostIdInChannel = getMostRecentPostIdInChannel(state, ownProps.channelId);
         const post = getPost(state, recentPostIdInChannel);
         const getCommentCountForPost = makeGetCommentCountForPost();
         const latestReplyablePostId = getLatestReplyablePostId(state);
-        const currentChannelMembersCount = getCurrentChannelStats(state) ? getCurrentChannelStats(state).member_count : 1;
+        // const currentChannelMembersCount = getCurrentChannelStats(state) ? getCurrentChannelStats(state).member_count : 1;
         const enableTutorial = config.EnableTutorial === 'true';
         const tutorialStep = getInt(state, Preferences.TUTORIAL_STEP, getCurrentUserId(state), TutorialSteps.FINISHED);
         const enableEmojiPicker = config.EnableEmojiPicker === 'true';
@@ -57,8 +57,8 @@ function mapStateToProps() {
 
         return {
             currentTeamId: getCurrentTeamId(state),
-            currentChannel,
-            currentChannelMembersCount,
+            currentChannel: { id: ownProps.channelId }, // Patrik: Other properties are not needed
+            currentChannelMembersCount: 1, // Patrik: Not sure what this is for
             currentUserId,
             codeBlockOnCtrlEnter: getBool(state, PreferencesRedux.CATEGORY_ADVANCED_SETTINGS, 'code_block_ctrl_enter', true),
             ctrlSend: getBool(state, Preferences.CATEGORY_ADVANCED_SETTINGS, 'send_on_ctrl_enter'),

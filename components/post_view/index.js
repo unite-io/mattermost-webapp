@@ -15,8 +15,8 @@ import {Preferences} from 'utils/constants.jsx';
 
 import PostList from './post_list.jsx';
 
-function makeMapStateToProps() {
-    const getPostsInChannel = makeGetPostsInChannel();
+function makeMapStateToProps(state, ownProps) {
+    const getPostsInChannel = makeGetPostsInChannel(ownProps.channelId);
     const getPostsAroundPost = makeGetPostsAroundPost();
 
     return function mapStateToProps(state, ownProps) {

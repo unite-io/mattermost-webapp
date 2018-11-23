@@ -25,8 +25,8 @@ const getDeactivatedChannel = createSelector(
     }
 );
 
-function mapStateToProps(state) {
-    const channel = state.entities.channels.channels[state.entities.channels.currentChannelId];
+function mapStateToProps(state, ownProps) {
+    const channel = state.entities.channels.channels[ownProps.channelId];
 
     const config = getConfig(state);
     const enableTutorial = config.EnableTutorial === 'true';

@@ -25,6 +25,7 @@ import NewMessageIndicator from './new_message_indicator.jsx';
 import Post from './post';
 import ScrollToBottomArrows from './scroll_to_bottom_arrows.jsx';
 import CreateChannelIntroMessage from './channel_intro_message';
+import * as PostUtils from '../../utils/post_utils';
 
 const CLOSE_TO_BOTTOM_SCROLL_MARGIN = 10;
 const POSTS_PER_PAGE = Constants.POST_CHUNK_SIZE / 2;
@@ -512,6 +513,11 @@ export default class PostList extends React.PureComponent {
         for (let i = posts.length - 1; i >= 0; i--) {
             const post = posts[i];
 
+            // Skip system messages for now
+            if (PostUtils.isSystemMessage(post)) {
+                continue
+            }
+
             if (
                 post == null ||
                 post.type === PostTypes.EPHEMERAL_ADD_TO_CHANNEL ||
@@ -670,8 +676,8 @@ export default class PostList extends React.PureComponent {
                             ref='postListContent'
                             className='post-list__content'
                         >
-                            {topRow}
-                            {this.createPosts(posts.slice(0, postVisibility))}
+                            {/*{topRow}*/}
+                            {this.createPosts(posts)}
                         </div>
                     </div>
                 </div>

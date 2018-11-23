@@ -128,6 +128,7 @@ export default class ChannelView extends React.PureComponent {
                 >
                     {!channelIsArchived &&
                         <CreatePost
+                            channelId={this.props.channelId}
                             getChannelView={this.getChannelView}
                         />
                     }
@@ -157,16 +158,16 @@ export default class ChannelView extends React.PureComponent {
         return (
             <div
                 ref='channelView'
-                id='app-content'
-                className='app__content'
+                style={{
+                    width: 500,
+                  margin: '0 auto', 'box-shadow': '0 2px 10px rgba(92,112,128,0.05)',
+                  background: 'white', marginBottom: 40
+                }}
+                // id='app-content'
+                // className='app__content'
             >
                 <FileUploadOverlay overlayType='center'/>
-                <ChannelHeader
-                    channelId={this.props.channelId}
-                />
-                <DeferredPostView
-                    channelId={this.props.channelId}
-                />
+                <PostView channelId={this.props.channelId}/>
                 {createPost}
             </div>
         );

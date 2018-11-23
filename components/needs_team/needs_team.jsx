@@ -16,6 +16,7 @@ import {loadProfilesForSidebar} from 'actions/user_actions.jsx';
 import {makeAsyncComponent} from 'components/async_load';
 import loadBackstageController from 'bundle-loader?lazy!components/backstage';
 import ChannelController from 'components/channel_layout/channel_controller';
+import MultiChannelView from '../multi_channel_view/multi_channel_view';
 
 const BackstageController = makeAsyncComponent(loadBackstageController);
 
@@ -241,6 +242,11 @@ export default class NeedsTeam extends React.Component {
                     path={'/:team/emoji'}
                     component={BackstageController}
                 />
+                  <Route
+                    path={'/:team/multi-channel-view'}
+                    component={MultiChannelView}
+                  />
+
                 <Route
                     render={(renderProps) => (
                         <ChannelController
