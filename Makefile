@@ -81,10 +81,30 @@ help:
 	mkdir -p .volumes/app/mattermost/plugins
 	mkdir -p .volumes/db/var/lib/postgresql/data
 
-.PHONY: start-stack stop-stack
+.PHONY: start-stack stop-stack scaffold reset
 
 start-stack: .volumes
 	docker-compose up
 
 stop-stack:
 	docker-compose down
+
+APP_CONTAINER_NAME:=mattermost-webapp_app_1
+VM_CMD:=docker exec -it $(APP_CONTAINER_NAME) mattermost
+TEAM:=theteam
+PASSWORD:=password
+
+scaffold:
+	$(VM_CMD) user create --email admin@example.com --system_admin --username admin --password $(PASSWORD)
+	$(VM_CMD) user create --email one@example.com --username one --password $(PASSWORD)
+	$(VM_CMD) user create --email two@example.com --username two --password $(PASSWORD)
+	$(VM_CMD) team create --name $(TEAM) --display_name "The Team"
+	$(VM_CMD) team add $(TEAM) admin one two
+	$(VM_CMD) channel create --team $(TEAM) --name channelone --display_name "Channel One" --private
+	$(VM_CMD) channel add $(TEAM):channelone one two
+	@echo
+	@echo "Login with users 'one', 'two', or 'admin'. Password is '$(PASSWORD)' for all of them"
+	@echo "A channel with ID 'channelone' is created and users 'one' and 'two' are added to it."
+
+reset:
+	$(VM_CMD) reset

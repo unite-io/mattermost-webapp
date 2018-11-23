@@ -1,8 +1,26 @@
-# Steps
+# What
 
-- read https://developers.mattermost.com/contribute/webapp/developer-setup/
-- run `make build` (creates / updates `./dist` folder)
-- run `make start-stack` (uses `./dist` folder contents to serve UI) and navigate to [localhost:8080](http://localhost:8080) (can stop with CTRL+C)
+Web-based UI (and React components library) that serve as clients for various interactions against MatterMost server. 
+MatterMost official Web UI is used as base for this code. That UI is taken apart into individual components that can be
+meaningfully embedded into other pages / sites.
+
+# Why
+
+MatterMost stand-alone client is a good stand-alone client, but we don't need a client. We need embeddable components.
+
+Here we take the official client apart into components that together still act as effective MatterMost client, but can
+be embedded independently throughout the page to facilitate better, natural user experience for users leveraging
+real-time communication within some other product.
+
+# How
+
+Read https://developers.mattermost.com/contribute/webapp/developer-setup/
+
+- run `npm run build` (creates / updates `./dist` folder)
+- run `make start-stack` (uses `./dist` folder contents to serve UI)
+- (in a separate terminal) run `make scaffold` to set up base users (including usernames and passwords), team etc. 
+- navigate to [localhost:8080](http://localhost:8080) 
+- can stop compose stack with CTRL+C
 - run `make stop-stack` if some processes are stuck after CTRL+C. Check with `docker ps`
 
 This set up saves the state of the server in `.volumes` folder. 
